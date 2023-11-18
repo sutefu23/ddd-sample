@@ -2,7 +2,7 @@ import { ValueObject } from "./base/ValueObject";
 import { InvalidArgumentError } from "../error/Error";
 
 // 都道府県の型とバリューオブジェクトの定義
-const Prefecture = {
+export const Prefecture = {
   Tokyo: "東京",
   Chiba: "千葉",
   Saitama: "埼玉",
@@ -13,7 +13,7 @@ const Prefecture = {
   Yamanashi: "山梨",
 } as const;
 
-type PrefectureEnum = (typeof Prefecture)[keyof typeof Prefecture];
+export type PrefectureEnum = (typeof Prefecture)[keyof typeof Prefecture];
 
 export class PrefectureValue extends ValueObject<PrefectureEnum> {
   private constructor(val: PrefectureEnum) {
