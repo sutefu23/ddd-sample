@@ -2,15 +2,18 @@ import { ValueObject } from "./base/ValueObject";
 import { InvalidArgumentError } from "../error/Error";
 
 // 都道府県の型とバリューオブジェクトの定義
-type PrefectureEnum =
-  | "東京"
-  | "千葉"
-  | "埼玉"
-  | "神奈川"
-  | "群馬"
-  | "栃木"
-  | "茨城"
-  | "山梨";
+const Prefecture = {
+  Tokyo: "東京",
+  Chiba: "千葉",
+  Saitama: "埼玉",
+  Kanagawa: "神奈川",
+  Gunma: "群馬",
+  Tochigi: "栃木",
+  Ibaraki: "茨城",
+  Yamanashi: "山梨",
+} as const;
+
+type PrefectureEnum = (typeof Prefecture)[keyof typeof Prefecture];
 
 export class PrefectureValue extends ValueObject<PrefectureEnum> {
   private constructor(val: PrefectureEnum) {
@@ -18,10 +21,8 @@ export class PrefectureValue extends ValueObject<PrefectureEnum> {
   }
 
   static create(val: PrefectureEnum): PrefectureValue | InvalidArgumentError {
-    if (!/^("東京都" | "大阪府" | "福岡県")$/gu.test(val)) {
-      return new InvalidArgumentError(
-        "lotNoの形式が正しくありません。英語-数字" + val
-      );
+    if (!Object.values(Prefecture).includes(val)) {
+      return new InvalidArgumentError("Prefecture is invalid.");
     }
     return new this(val);
   }
